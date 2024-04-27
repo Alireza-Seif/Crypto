@@ -18,10 +18,10 @@ class Crypto {
       jsonMapObject['id'],
       jsonMapObject['name'],
       jsonMapObject['symbol'],
-      jsonMapObject['changePercent24hr'],
-      jsonMapObject['priceUsd'],
-      jsonMapObject['marketCapUsd'],
-      jsonMapObject['rank'],
+      double.parse(jsonMapObject['changePercent24hr']),
+      double.parse(jsonMapObject['priceUsd']),
+      double.parse(jsonMapObject['marketCapUsd']),
+      int.parse(jsonMapObject['rank']),
     );
   }
 }
