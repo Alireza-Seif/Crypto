@@ -1,3 +1,4 @@
+import 'package:crypto/constants/constants.dart';
 import 'package:crypto/data/model/crypto.dart';
 import 'package:flutter/material.dart';
 
@@ -42,14 +43,17 @@ class _CoinListScreenState extends State<CoinListScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                       Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(cryptoList![index].priceUsd.toStringAsFixed(2)),
-                          Text(cryptoList![index].changePercent24Hr.toStringAsFixed(2)),
+                          Text(cryptoList![index]
+                              .changePercent24Hr
+                              .toStringAsFixed(2)),
                         ],
                       ),
-                      SizedBox(width: 50,
+                      SizedBox(
+                        width: 50,
                         child: Center(
                           child: _getIconChangePercent(
                               cryptoList![index].changePercent24Hr),
@@ -69,12 +73,12 @@ class _CoinListScreenState extends State<CoinListScreen> {
         ? const Icon(
             Icons.trending_down,
             size: 24,
-            color: Colors.red,
+            color: redColor,
           )
         : const Icon(
             Icons.trending_up,
             size: 24,
-            color: Colors.green,
+            color: greenColor,
           );
   }
 }

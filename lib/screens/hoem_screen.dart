@@ -1,3 +1,4 @@
+import 'package:crypto/constants/constants.dart';
 import 'package:crypto/data/model/crypto.dart';
 import 'package:crypto/screens/coin_list_screen.dart';
 import 'package:dio/dio.dart';
@@ -11,9 +12,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> { 
-
-@override
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -22,13 +22,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-          child: Center(
-         child: SpinKitFadingCircle(
-           color: Colors.blue,
-           size: 80,
-         ),
+    return  Scaffold(
+      backgroundColor: Colors.grey[800],
+      body: const SafeArea(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image(
+            image: AssetImage('assets/images/logo.png'),
+          ),
+          SpinKitFadingCircle(
+            color: greenColor,
+            size: 80,
+          ),
+        ],
       )),
     );
   }
