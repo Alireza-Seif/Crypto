@@ -30,9 +30,11 @@ class _CoinListScreenState extends State<CoinListScreen> {
               height: 80,
               margin: const EdgeInsets.all(10),
               color: Colors.blue,
-              child: Text(
-                cryptoList![index].name,
-                style: const TextStyle(fontSize: 30),
+              child: Center(
+                child: Text(
+                  cryptoList![index].name,
+                  style: const TextStyle(fontSize: 30),
+                ),
               ),
             );
           },

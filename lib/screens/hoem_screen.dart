@@ -25,15 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return const Scaffold(
       body: SafeArea(
           child: Center(
-        child: SpinKitFadingCircle(
-          color: Colors.blue,
-          size: 80,
-        ),
+         child: SpinKitFadingCircle(
+           color: Colors.blue,
+           size: 80,
+         ),
       )),
     );
   }
 
-  Future<void> getData() async {
+  void getData() async {
     var response = await Dio().get('https://api.coincap.io/v2/assets');
 
     List<Crypto> cryptoList = response.data['data']
