@@ -1,7 +1,9 @@
 import 'package:crypto/constants/constants.dart';
 import 'package:crypto/data/model/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CoinListScreen extends StatefulWidget {
   CoinListScreen({super.key, this.cryptoList});
@@ -30,26 +32,58 @@ class _CoinListScreenState extends State<CoinListScreen> {
         automaticallyImplyLeading: false,
         title: const Text(
           'Crypto',
-          style: TextStyle(color: Colors.white, fontFamily: 'Exo'),
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Exo',
+          ),
         ),
         backgroundColor: blackColor,
       ),
       body: SafeArea(
-        child: RefreshIndicator(
-          backgroundColor: greenColor,
-          color: blackColor,
-          onRefresh: () async {
-            List<Crypto> fereshData = await _getData();
-            setState(() {
-              cryptoList = fereshData;
-            });
-          },
-          child: ListView.builder(
-            itemCount: cryptoList!.length,
-            itemBuilder: (context, index) {
-              return _getListTileItem(cryptoList![index]);
-            },
-          ),
+        child: Column(
+          children: [
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: SizedBox(
+                width: 380,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'coin name',
+                    hintStyle: const TextStyle(
+                      fontFamily: 'Exo',
+                      color: blackColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    filled: true,
+                    fillColor: greenColor,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                backgroundColor: greenColor,
+                color: blackColor,
+                onRefresh: () async {
+                  List<Crypto> fereshData = await _getData();
+                  setState(() {
+                    cryptoList = fereshData;
+                  });
+                },
+                child: ListView.builder(
+                  itemCount: cryptoList!.length,
+                  itemBuilder: (context, index) {
+                    return _getListTileItem(cryptoList![index]);
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
