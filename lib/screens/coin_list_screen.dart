@@ -2,6 +2,7 @@ import 'package:crypto/constants/constants.dart';
 import 'package:crypto/data/model/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CoinListScreen extends StatefulWidget {
   CoinListScreen({super.key, this.cryptoList});
@@ -13,6 +14,7 @@ class CoinListScreen extends StatefulWidget {
 
 class _CoinListScreenState extends State<CoinListScreen> {
   List<Crypto>? cryptoList;
+  bool isSearchLoadingVisible = false;
 
   @override
   void initState() {
@@ -63,6 +65,16 @@ class _CoinListScreenState extends State<CoinListScreen> {
                     filled: true,
                     fillColor: greenColor,
                   ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: isSearchLoadingVisible,
+              child: const Text(
+                'Updating cryptocurrencies',
+                style: TextStyle(
+                  color: greenColor,
+                  fontFamily: 'Exo',
                 ),
               ),
             ),
@@ -172,9 +184,13 @@ class _CoinListScreenState extends State<CoinListScreen> {
     List<Crypto> cryptoResultList = [];
 
     if (enteredKeyword.isEmpty) {
+      setState(() {
+        isSearchLoadingVisible = true;
+      });
       var result = await _getData();
       setState(() {
         cryptoList = result;
+        isSearchLoadingVisible = false;
       });
       return;
     }
