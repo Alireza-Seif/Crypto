@@ -26,20 +26,55 @@ class _CoinListScreenState extends State<CoinListScreen> {
         child: ListView.builder(
           itemCount: cryptoList!.length,
           itemBuilder: (context, index) {
-            return Container(
-              height: 80,
-              margin: const EdgeInsets.all(10),
-              color: Colors.blue,
-              child: Center(
-                child: Text(
-                  cryptoList![index].name,
-                  style: const TextStyle(fontSize: 30),
+            return ListTile(
+                title: Text(cryptoList![index].name),
+                subtitle: Text(cryptoList![index].symbol),
+                leading: SizedBox(
+                  width: 30,
+                  child: Center(
+                    child: Text(
+                      cryptoList![index].rank.toString(),
+                    ),
+                  ),
                 ),
-              ),
-            );
+                trailing: SizedBox(
+                  width: 150,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(cryptoList![index].priceUsd.toStringAsFixed(2)),
+                          Text(cryptoList![index].changePercent24Hr.toStringAsFixed(2)),
+                        ],
+                      ),
+                      SizedBox(width: 50,
+                        child: Center(
+                          child: _getIconChangePercent(
+                              cryptoList![index].changePercent24Hr),
+                        ),
+                      ),
+                    ],
+                  ),
+                ));
           },
         ),
       ),
     );
+  }
+
+  Widget _getIconChangePercent(double percentChange) {
+    return percentChange <= 0
+        ? const Icon(
+            Icons.trending_down,
+            size: 24,
+            color: Colors.red,
+          )
+        : const Icon(
+            Icons.trending_up,
+            size: 24,
+            color: Colors.green,
+          );
   }
 }
