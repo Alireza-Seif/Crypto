@@ -37,58 +37,7 @@ class _CoinListScreenState extends State<CoinListScreen> {
         child: ListView.builder(
           itemCount: cryptoList!.length,
           itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(
-                  cryptoList![index].name,
-                  style: const TextStyle(color: greenColor),
-                ),
-                subtitle: Text(
-                  cryptoList![index].symbol,
-                  style: const TextStyle(color: greyColor),
-                ),
-                leading: SizedBox(
-                  width: 30,
-                  child: Center(
-                    child: Text(
-                      cryptoList![index].rank.toString(),
-                      style: const TextStyle(color: greyColor),
-                    ),
-                  ),
-                ),
-                trailing: SizedBox(
-                  width: 150,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            cryptoList![index].priceUsd.toStringAsFixed(2),
-                            style: const TextStyle(color: greyColor,fontSize: 18),
-                          ),
-                          Text(
-                            cryptoList![index]
-                                .changePercent24Hr
-                                .toStringAsFixed(2),
-                            style: TextStyle(
-                              color: _getColorChangeText(
-                                  cryptoList![index].changePercent24Hr),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 50,
-                        child: Center(
-                          child: _getIconChangePercent(
-                              cryptoList![index].changePercent24Hr),
-                        ),
-                      ),
-                    ],
-                  ),
-                ));
+            return _getListTileItem(cryptoList![index]);
           },
         ),
       ),
@@ -111,5 +60,56 @@ class _CoinListScreenState extends State<CoinListScreen> {
 
   Color _getColorChangeText(double percentChange) {
     return percentChange <= 0 ? redColor : greenColor;
+  }
+
+  Widget _getListTileItem(Crypto crypto) {
+    return ListTile(
+        title: Text(
+          crypto.name,
+          style: const TextStyle(color: greenColor),
+        ),
+        subtitle: Text(
+          crypto.symbol,
+          style: const TextStyle(color: greyColor),
+        ),
+        leading: SizedBox(
+          width: 30,
+          child: Center(
+            child: Text(
+              crypto.rank.toString(),
+              style: const TextStyle(color: greyColor),
+            ),
+          ),
+        ),
+        trailing: SizedBox(
+          width: 150,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    crypto.priceUsd.toStringAsFixed(2),
+                    style: const TextStyle(color: greyColor, fontSize: 18),
+                  ),
+                  Text(
+                    crypto.changePercent24Hr.toStringAsFixed(2),
+                    style: TextStyle(
+                      color: _getColorChangeText(crypto.changePercent24Hr),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 50,
+                child: Center(
+                  child: _getIconChangePercent(crypto.changePercent24Hr),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
