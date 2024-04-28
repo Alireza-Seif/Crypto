@@ -23,18 +23,35 @@ class _CoinListScreenState extends State<CoinListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: blackColor,
+      appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Crypto',
+          style: TextStyle(color: Colors.white, fontFamily: 'Exo'),
+        ),
+        backgroundColor: blackColor,
+      ),
       body: SafeArea(
         child: ListView.builder(
           itemCount: cryptoList!.length,
           itemBuilder: (context, index) {
             return ListTile(
-                title: Text(cryptoList![index].name),
-                subtitle: Text(cryptoList![index].symbol),
+                title: Text(
+                  cryptoList![index].name,
+                  style: const TextStyle(color: greenColor),
+                ),
+                subtitle: Text(
+                  cryptoList![index].symbol,
+                  style: const TextStyle(color: greyColor),
+                ),
                 leading: SizedBox(
                   width: 30,
                   child: Center(
                     child: Text(
                       cryptoList![index].rank.toString(),
+                      style: const TextStyle(color: greyColor),
                     ),
                   ),
                 ),
@@ -45,11 +62,21 @@ class _CoinListScreenState extends State<CoinListScreen> {
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(cryptoList![index].priceUsd.toStringAsFixed(2)),
-                          Text(cryptoList![index]
-                              .changePercent24Hr
-                              .toStringAsFixed(2)),
+                          Text(
+                            cryptoList![index].priceUsd.toStringAsFixed(2),
+                            style: const TextStyle(color: greyColor,fontSize: 18),
+                          ),
+                          Text(
+                            cryptoList![index]
+                                .changePercent24Hr
+                                .toStringAsFixed(2),
+                            style: TextStyle(
+                              color: _getColorChangeText(
+                                  cryptoList![index].changePercent24Hr),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -80,5 +107,9 @@ class _CoinListScreenState extends State<CoinListScreen> {
             size: 24,
             color: greenColor,
           );
+  }
+
+  Color _getColorChangeText(double percentChange) {
+    return percentChange <= 0 ? redColor : greenColor;
   }
 }

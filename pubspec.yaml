@@ -22,4 +22,10 @@ flutter:
 
   assets:
    - assets/
+   - assets/fonts/
    - assets/images/
+
+  fonts:
+     - family: Exo
+       fonts:
+         - asset: assets/fonts/Exo.ttf
