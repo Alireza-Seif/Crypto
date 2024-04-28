@@ -1,9 +1,7 @@
 import 'package:crypto/constants/constants.dart';
 import 'package:crypto/data/model/crypto.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CoinListScreen extends StatefulWidget {
   CoinListScreen({super.key, this.cryptoList});
@@ -47,6 +45,9 @@ class _CoinListScreenState extends State<CoinListScreen> {
               child: SizedBox(
                 width: 380,
                 child: TextField(
+                  onChanged: (value) {
+                    _filterList(value);
+                  },
                   decoration: InputDecoration(
                     hintText: 'coin name',
                     hintStyle: const TextStyle(
@@ -57,7 +58,7 @@ class _CoinListScreenState extends State<CoinListScreen> {
                     border: OutlineInputBorder(
                       borderSide:
                           const BorderSide(width: 0, style: BorderStyle.none),
-                      borderRadius: BorderRadius.circular(40),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     filled: true,
                     fillColor: greenColor,
@@ -165,5 +166,24 @@ class _CoinListScreenState extends State<CoinListScreen> {
         .map<Crypto>((jsonMapObject) => Crypto.fromMapJson(jsonMapObject))
         .toList();
     return cryptoList;
+  }
+
+  Future<void> _filterList(String enteredKeyword) async {
+    List<Crypto> cryptoResultList = [];
+
+    if (enteredKeyword.isEmpty) {
+      var result = await _getData();
+      setState(() {
+        cryptoList = result;
+      });
+      return;
+    }
+    cryptoResultList = cryptoList!.where((element) {
+      return element.name.toLowerCase().contains(enteredKeyword.toLowerCase());
+    }).toList();
+
+    setState(() {
+      cryptoList = cryptoResultList;
+    });
   }
 }
